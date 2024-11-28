@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Claims - Campus Navigator</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f0f3f5;
+            --text-color: #2c3e50;
+            --border-color: #e0e0e0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+        .claim-list {
+            display: grid;
+            gap: 1rem;
+        }
+        .claim-item {
+            background-color: #f9f9f9;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 1rem;
+        }
+        .claim-details {
+            margin-bottom: 1rem;
+        }
+        .approve-button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+        .approve-button:hover {
+            background-color: #27ae60;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Review Claims</h1>
+        <div id="claimList" class="claim-list"></div>
+        <a href="listed-items.html" class="back-link">Back to Item List</a>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        async function fetchClaims() {
+            try {
+                const response = await fetch(`${API_URL}/items`);
+                const items = await response.json();
+                displayClaims(items);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function displayClaims(items) {
+            const claimList = document.getElementById('claimList');
+            claimList.innerHTML = '';
+            
+            items.forEach((item) => {
+                if (item.claims && item.claims.length > 0) {
+                    item.claims.forEach((claim) => {
+                        const claimItem = document.createElement('div');
+                        claimItem.className = 'claim-item';
+                        claimItem.innerHTML = `
+                            <h3>Claim for ${item.name}</h3>
+                            <div class="claim-details">
+                                <p><strong>Claimant:</strong> ${claim.claimantName}</p>
+                                <p><strong>Contact:</strong> ${claim.claimantContact}</p>
+                                <p><strong>Details:</strong> ${claim.claimDetails}</p>
+                                <p><strong>Unique Mark:</strong> ${claim.uniqueMark}</p>
+                                <p><strong>Color:</strong> ${claim.color}</p>
+                                <p><strong>Additional Info:</strong> ${claim.additionalInfo}</p>
+                                <p><strong>Status:</strong> ${claim.status}</p>
+                            </div>
+                            ${claim.status === 'pending' ? `
+                                <button class="approve-button" onclick="approveClaim('${item._id}', '${claim._id}')">
+                                    Approve Claim
+                                </button>
+                            ` : ''}
+                        `;
+                        claimList.appendChild(claimItem);
+                    });
+                }
+            });
+        }
+
+        async function approveClaim(itemId, claimId) {
+            try {
+                const response = await fetch(`${API_URL}/items/${itemId}/claims/${claimId}/approve`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (response.ok) {
+                    alert('Claim approved successfully!');
+                    fetchClaims(); // Refresh the list
+                } else {
+                    alert('Error approving claim. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        }
+
+        // Fetch claims when the page loads
+        fetchClaims();
+    </script>
+</body>
+</html>
+

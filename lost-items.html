@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Navigator - Report Lost or Found Item</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --card-background: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(to right, #9333ea, #db2777);;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .form-container {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .toggle-button {
+            padding: 0.75rem 1.5rem;
+            margin: 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s;
+            font-weight: 500;
+        }
+
+        .toggle-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .toggle-button:active {
+            transform: translateY(0);
+        }
+
+        .toggle-button.lost {
+            background-color: red;
+            color: white;
+        }
+
+        .toggle-button.found {
+            background-color: Green;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(to right, #9333ea, #db2777);;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3a7bd5;
+        }
+
+        .success-message, .error-message {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .view-items-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .view-items-link:hover {
+            color: #3a7bd5;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Campus Navigator</h1>
+        <p class="subtitle">Report Lost or Found Item</p>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <div class="button-container">
+                <button id="lostButton" class="toggle-button lost">Report Lost Item</button>
+                <button id="foundButton" class="toggle-button found">Report Found Item</button>
+            </div>
+            <form id="itemForm" enctype="multipart/form-data">
+                <label for="name">Item Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
+                
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+                
+                <label for="photo">Photo:</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+                
+                <div id="finderInfoSection" style="display: none;">
+                    <label for="finderName">Your Name:</label>
+                    <input type="text" id="finderName" name="finderName">
+                    
+                    <label for="finderContact">Your Contact Number:</label>
+                    <input type="tel" id="finderContact" name="finderContact">
+                </div>
+                
+                <button type="submit">Submit Report</button>
+            </form>
+        </div>
+        <div id="message"></div>
+        <a href="listed-items.html" class="view-items-link">View All Reported Items</a>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let currentStatus = 'lost';
+
+        const lostButton = document.getElementById('lostButton');
+        const foundButton = document.getElementById('foundButton');
+        const form = document.getElementById('itemForm');
+        const messageDiv = document.getElementById('message');
+        const finderInfoSection = document.getElementById('finderInfoSection');
+
+        lostButton.addEventListener('click', () => setStatus('lost'));
+        foundButton.addEventListener('click', () => setStatus('found'));
+
+        function setStatus(status) {
+            currentStatus = status;
+            lostButton.style.opacity = status === 'lost' ? 1 : 0.6;
+            foundButton.style.opacity = status === 'found' ? 1 : 0.6;
+            form.querySelector('button[type="submit"]').style.backgroundColor = 
+                status === 'lost' ? '#ff6b6b' : '#51cf66';
+            finderInfoSection.style.display = status === 'found' ? 'block' : 'none';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            formData.append('status', currentStatus);
+
+            try {
+                const response = await fetch(`${API_URL}/items`, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    showMessage('Item reported successfully!', 'success');
+                    form.reset();
+                } else {
+                    showMessage('Error reporting item. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('An error occurred. Please try again later.', 'error');
+            }
+        });
+
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+            messageDiv.style.display = 'block';
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+                messageDiv.textContent = '';
+                messageDiv.className = '';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
+

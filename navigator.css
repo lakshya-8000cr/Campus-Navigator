@@ -1,0 +1,312 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: "Martel Sans", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    height: 72px;
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav-logo {
+    height: 60px;
+    width: 172px;
+    margin-top: 2px;
+}
+
+.logo {
+    height: 69px;    
+    width: 100%;
+    background-image: url("new png campus chit.png");
+    background-size: cover;
+}
+
+.nav-text {
+    font-size: 29px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: rgb(115, 58, 219);
+    padding-left:40px;
+}
+
+.main-container-campus {
+    flex-grow: 1;
+    background-color: #f3e8ff;
+    box-shadow: inset -1px 1px 5px 4px rgba(33, 32, 32, 0.3);
+    position: relative;
+    padding: 20px;
+}
+
+.nav-search-icons {
+    font-size: 20px;
+    color: #1f2937;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.nav-buttons {
+    color: #1f2937;
+    border: none;
+    background-color: transparent;
+    font-size: 17px;
+    cursor: pointer;
+    margin-right: 10px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.nav-buttons a{
+    text-decoration: none;
+    color: black;
+}
+
+#icon {
+    cursor: pointer;
+}
+
+.search-div {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+    margin-top:50px;
+    margin-bottom:50px; 
+}
+
+.searchbar {
+    height: 40px;
+    flex-grow: 1;
+    border: 1px solid rgb(223, 218, 218);
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.search-button {
+    height: 40px;
+    padding: 0 20px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #9333ea, #db2777);
+    cursor: pointer;
+}
+
+.campus-map {
+    background-color: white;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.campus-map p {
+    font-size: 1.2rem;
+    font-weight: bolder;
+    padding: 5px;
+    color: white;
+    background: linear-gradient(to right, #9333ea, #db2777);
+    
+}
+
+.map {
+    height: 432px;
+    border-radius: 6px;
+    background: linear-gradient(to right, #93c5fd, #9333ea);
+    opacity: 0.7;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin:30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+    opacity: 1;
+}
+
+h1 {
+    font-size: 26px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+
+.campus-events {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.events {
+    background-color: white;
+    border-radius: 9px;
+    box-shadow: 0px 4px 8px rgb(192, 190, 190);
+    flex: 1 1 300px;
+    max-width: calc(33.333% -14px);
+}
+
+.camp-eve-col, .camp-eve-col3, .camp-eve-col5 {
+    height: 190px;
+    background: linear-gradient(to right, #9333ea, #db2777);
+}
+
+.camp-eve-col{
+    background-image: url("1.jpg");
+    background-size: cover;
+}
+
+.camp-eve-col3{
+    background-image: url("2.jpg");
+    background-size: cover;
+}
+
+.camp-eve-col5{
+    background-image: url("4.jpg");
+    background-size: cover;
+}
+.camp-eve-col2, .camp-eve-col4, .camp-eve-col6 {
+    padding: 20px;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+.campus-events p {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 5px;
+}
+
+.events-button {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #9333ea, #db2777);
+    border: none;
+    font-weight: bolder;
+    cursor: pointer;
+    margin-top: 10px;
+    color:white;
+}
+
+.campus-foot {
+    background-color: rgb(31 41 55);
+    color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-around;
+    padding: 40px 20px;
+}
+
+.foot-work {
+    font-size: 20px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+}
+
+.list a {
+    color: white;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.img-foot {
+    height: 82px;
+    width: 186px;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .nav-text {
+        font-size: 24px;
+        margin: 20px 0;
+    }
+
+    .nav-search-icons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-buttons {
+        margin-bottom: 10px;
+    }
+
+    .search-div {
+        flex-direction: column;
+        margin-top:20px;
+        margin-bottom:20px;
+    }
+
+    .searchbar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+
+    .campus-events {
+        flex-direction: column;
+    }
+
+    .events {
+        max-width: 100%;
+    }
+
+    .campus-foot {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .list {
+        margin-bottom: 20px;
+    }
+
+    .map {
+        margin:10px;
+    }
+
+    .img-foot {
+      padding-left:40px;
+    }
+}
+
+.one{
+    text-decoration: none;
+    color: #1f2937;
+}

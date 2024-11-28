@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Navigator - Lost and Found Items</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: linear-gradient(to right, #9333ea, #db2777);
+            --secondary-color: #f39c12;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --card-background: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(to right, #9333ea, #db2777);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .item-card {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            align-content: flex-end;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px var(--shadow-color);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 3-00px;
+            object-fit: cover;
+        }
+
+        .item-content {
+            padding: 1.5rem;
+        }
+
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .item-status.lost {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        .item-status.found {
+            background-color: #51cf66;
+            color: white;
+        }
+
+        .item-details {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .view-details-btn {
+            height: 45px;
+    padding: 0 20px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #9333ea, #db2777);
+    cursor: pointer;
+    text-decoration:none;
+        }
+
+        .view-details-btn:hover {
+            background-color: #3a7bd5;
+        }
+
+        .modal {
+            display: none;
+            /*position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);*/
+        }
+
+        .modal-container {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-background);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #modalItemImage {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .claim-form {
+            margin-top: 1rem;
+        }
+
+        .claim-form input,
+        .claim-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .claim-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .claim-form button:hover {
+            background-color: #e67e22;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .item-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Campus Navigator</h1>
+        <p class="subtitle">Lost and Found Items</p>
+    </header>
+
+    <div class="container">
+        <div id="itemGrid" class="item-grid"></div>
+    </div>
+
+    <div id="itemModal" class="modal">
+        <div class="modal-container">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img id="modalItemImage" src="" alt="Item Image">
+                <h2 id="modalItemName"></h2>
+                <p id="modalItemStatus"></p>
+                <p id="modalItemDescription"></p>
+                <p id="modalItemLocation"></p>
+                <p id="modalItemDate"></p>
+                <div id="modalClaimSection"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        async function fetchItems() {
+            try {
+                const response = await fetch(`${API_URL}/items`);
+                const items = await response.json();
+                displayItems(items);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function displayItems(items) {
+            const itemGrid = document.getElementById('itemGrid');
+            itemGrid.innerHTML = '';
+            items.forEach((item) => {
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+                const imageSrc = item.photo ? `http://localhost:3000${item.photo}` : 'https://via.placeholder.com/300x200?text=No+Image';
+                itemCard.innerHTML = `
+                    <img src="${imageSrc}" alt="${item.name}" class="item-image">
+                    <div class="item-content">
+                        <h3 class="item-name">${item.name}</h3>
+                        <span class="item-status ${item.status}">${item.status}</span>
+                        <p class="item-details">${item.description.substring(0, 100)}${item.description.length > 100 ? '...' : ''}</p>
+                        <a href="#" class="view-details-btn" data-id="${item._id}">View Details</a>
+                    </div>
+                `;
+                itemGrid.appendChild(itemCard);
+            });
+
+            document.querySelectorAll('.view-details-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal(e.target.dataset.id);
+                });
+            });
+        }
+
+        async function openModal(itemId) {
+            document.body.style.overflow = 'hidden'; // ab yeh scrolling disable kar dega
+            const modal = document.getElementById('itemModal');
+            const modalItemName = document.getElementById('modalItemName');
+            const modalItemStatus = document.getElementById('modalItemStatus');
+            const modalItemDescription = document.getElementById('modalItemDescription');
+            const modalItemLocation = document.getElementById('modalItemLocation');
+            const modalItemDate = document.getElementById('modalItemDate');
+            const modalItemImage = document.getElementById('modalItemImage');
+            const modalClaimSection = document.getElementById('modalClaimSection');
+
+            try {
+                const response = await fetch(`${API_URL}/items/${itemId}`);
+                const item = await response.json();
+
+                modalItemName.textContent = item.name;
+                modalItemStatus.innerHTML = `<span class="item-status ${item.status}">${item.status}</span>`;
+                modalItemDescription.textContent = `Description: ${item.description}`;
+                modalItemLocation.textContent = `Location: ${item.location}`;
+                modalItemDate.textContent = `Date Reported: ${new Date(item.date).toLocaleString()}`;
+                modalItemImage.src = item.photo ? `http://localhost:3000${item.photo}` : 'https://via.placeholder.com/300x200?text=No+Image';
+                modalItemImage.alt = item.name;
+
+                if (item.claimedBy) {
+                    modalClaimSection.innerHTML = `<p>Claimed By: ${item.claimedBy}</p>`;
+                } else {
+                    modalClaimSection.innerHTML = `
+                        <div class="claim-form">
+                            <h3>Claim This Item</h3>
+                            <form id="claimForm">
+                                <input type="text" id="claimantName" placeholder="Your Name" required>
+                                <input type="tel" id="claimantContact" placeholder="Your Contact Number" required>
+                                <input type="text" id="claimantRoll" placeholder="Your Roll Number" required>
+                                <textarea id="claimDetails" placeholder="Provide details to prove ownership" required></textarea>
+                                <button type="submit">Submit Claim</button>
+                            </form>
+                        </div>
+                    `;
+                    document.getElementById('claimForm').addEventListener('submit', (e) => submitClaim(e, itemId));
+                }
+
+                modal.style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function submitClaim(e, itemId) {
+            e.preventDefault();
+            const claimantName = document.getElementById('claimantName').value;
+            const claimantContact = document.getElementById('claimantContact').value;
+            const claimantRoll = document.getElementById('claimantRoll').value;
+            const claimDetails = document.getElementById('claimDetails').value;
+
+            try {
+                const response = await fetch(`${API_URL}/items/${itemId}/claim`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        claimedBy: claimantName,
+                        claimDetails,
+                        claimantContact,
+                        claimantRoll
+                    }),
+                });
+                if (response.ok) {
+                    alert('Claim submitted successfully! The finder will review your claim.');
+                    closeModal();
+                    fetchItems();
+                } else {
+                    alert('Error claiming item. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('itemModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling on the body
+        }
+
+        document.querySelector('.close').addEventListener('click', closeModal);
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('itemModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        });
+
+        fetchItems();
+    </script>
+</body>
+</html>
+
